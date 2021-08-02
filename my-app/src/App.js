@@ -3,6 +3,16 @@ import axios from 'axios';
 import { Component } from 'react';
 import './App.css';
 
+let API_HOST = 'localhost';
+let API_PORT = '3001';
+
+if (process.env.API_HOST) {
+  API_HOST = process.env.API_HOST;
+}
+if (process.env.API_PORT) {
+  API_PORT = process.env.API_PORT;
+}
+
 class MessageDisplay extends Component {
 
   constructor(props) {
@@ -17,7 +27,7 @@ class MessageDisplay extends Component {
   }
 
   getMessage = () => {
-    axios.get('http://localhost:3001/').then((res) => {
+    axios.get(`http://${API_HOST}:${API_PORT}/`).then((res) => {
       this.setState({ message: res.data.message})
     }).catch((err) => {
       console.error(err)
@@ -27,13 +37,15 @@ class MessageDisplay extends Component {
   }
 
   render() {
-    return <h1>{this.state.message}</h1>
+    return (
+      <h1>Message: {this.state.message}</h1>
+      )
   }
 }
 
 function App() {
   return (
-    <MessageDisplay message="Shit"/>
+    <MessageDisplay/>
   );
 }
 

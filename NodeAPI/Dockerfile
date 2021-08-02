@@ -1,14 +1,17 @@
 FROM node
+ARG SERVICENAME=nodeapi
 
 RUN apt-get -qq update && apt-get -qq -y install curl net-tools
 
-ENV PATH /app/node_modules/.bin:$PATH
+WORKDIR "/usr/src/$SERVICENAME"
 
+COPY . .
 COPY ./package.json .
 COPY ./package-lock.json .
-RUN npm install
-RUN npm install react-scripts@3.4.1 -g
 
-COPY . ./
+RUN npm install
+RUN chown root:node -R ./ && chmod 0750 -R ./
+
+USER node
 
 CMD ["npm", "start"]
