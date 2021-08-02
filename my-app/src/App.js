@@ -3,15 +3,10 @@ import axios from 'axios';
 import { Component } from 'react';
 import './App.css';
 
-let API_HOST = 'localhost';
-let API_PORT = '3001';
+const API_HOST = process.env.API_HOST || 'localhost';
+const API_PORT = process.env.API_PORT || '3001';
 
-if (process.env.API_HOST) {
-  API_HOST = process.env.API_HOST;
-}
-if (process.env.API_PORT) {
-  API_PORT = process.env.API_PORT;
-}
+console.log(process.env.API_HOST)
 
 class MessageDisplay extends Component {
 
@@ -27,7 +22,9 @@ class MessageDisplay extends Component {
   }
 
   getMessage = () => {
-    axios.get(`http://${API_HOST}:${API_PORT}/`).then((res) => {
+    let api_url = `http://${API_HOST}:${API_PORT}/`
+    console.log(`Getting data from ${api_url}`);
+    axios.get(api_url).then((res) => {
       this.setState({ message: res.data.message})
     }).catch((err) => {
       console.error(err)

@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+    client:
+        image: johnwid92/simple-react-client
+        ports: 
+            - 3000:3000
+        environment:
+            - API_HOST=api
+    
+    api:
+        image: johnwid92/simple-node-api
+        environment:
+            - TEST_VAR="hello var"
+        

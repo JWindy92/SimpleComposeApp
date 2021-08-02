@@ -14,4 +14,5 @@ app.get('/', (req, res) => {
 
 const server = app.listen(port, () => {
     console.log(`API Listening at http://localhost:${port}`)
+    console.log(`ENV VAR: ${process.env.TEST_VAR}`)
 })
